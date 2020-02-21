@@ -10,3 +10,9 @@ p{
   text-align: center;
   margin-top: -10px;
 }
+
+canvas{
+  position: absolute;
+  width: 90%;
+  left: 5%;
+}
