@@ -16,19 +16,22 @@ var branchFactor = 1;
 var nodePlacementLeft = false;
 var nodePlacementRight = false;
 
-root = {x:100, y:canvasHeight/2, left:null, right:null};
+var firstClick = true;
+
 // root.left = {x:200, y:canvasHeight/2, left:null, right:null};
 // root.right = {x:200, y:canvasHeight/2-100, left:null, right:null};
-draw()
 
 c.addEventListener('click', (e) => {
-
     console.log("click");
-
     const pos = {
         x: e.clientX-10,
         y: e.clientY-94
     };
+
+    if(firstClick){
+        firstClick = false;
+        root = {x:pos.x, y:pos.y, left:null, right:null};
+    }
 
     if (nodePlacementLeft){
         nodePlacementLeft = false;
@@ -55,12 +58,10 @@ c.addEventListener('click', (e) => {
         if (node.right !== null) {
             stack.push(node.right);
         }
-
         let nodeCenter = {
             x: node.x,
             y: node.y
         };
-
         if (isSelected(pos, nodeCenter)) {
             console.log(node + " is selected");
             selectedNode = node;
@@ -93,7 +94,6 @@ function addChild(){
         console.log("limit reached");
     }
 }
-
 
 function nodeRemove(node) {
     if (node !== null) {
