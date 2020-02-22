@@ -16,3 +16,17 @@ canvas{
   width: 90%;
   left: 5%;
 }
+
+.customButton {
+  margin-top: 350px;
+  margin-left: 50px;
+  background-color: #333333;
+  border: black;
+  color: white;
+  padding: 15px 15px;
+  text-align: center;
+  cursor: crosshair;
+}
+.customButton {
+  backgroundcolor: black;
+}
