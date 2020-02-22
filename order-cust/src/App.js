@@ -12,7 +12,7 @@ const App = () => {
         },
         tea: {
             name: "Tea",
-            desc: "I like my tea like I like my woman, cheap and from a third world country",
+            desc: "Tea, the lifeblood of the British",
             price: 1
         },
         monster: {
