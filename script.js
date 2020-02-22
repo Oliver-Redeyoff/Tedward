@@ -4,7 +4,7 @@ var ctx = c.getContext("2d");
 var nodes = []
 var nodeIndex = 0;
 
-var nodeDiameter = 30;
+var nodeRadius = 30;
 var canvasWidth = c.width;
 var canvasHeight = c.height;
 
@@ -13,8 +13,8 @@ drawNode(100, canvasHeight/2);
 c.addEventListener('click', (e) => {
 
   const pos = {
-    x: e.clientX,
-    y: e.clientY
+    x: e.clientX-10,
+    y: e.clientY-94
   };
 
   for(node in nodes){
@@ -32,7 +32,7 @@ c.addEventListener('click', (e) => {
 function drawNode(x,y){
   ctx.moveTo(x,y);
   ctx.beginPath();
-  ctx.arc(x, y, nodeDiameter, 0, Math.PI * 2, true);
+  ctx.arc(x, y, nodeRadius, 0, Math.PI * 2, true);
   ctx.stroke();
   nodes.push({x:x,y:y,index:nodeIndex, children:[]});
   nodeIndex += 1;
@@ -57,6 +57,5 @@ function addChild(index){
 }
 
 function isSelected(point, node) {
-  console.log(Math.sqrt((point.x-node.x)/2 + (point.y - node.y)/2))
-  return Math.sqrt((point.x-node.x)/2 + (point.y - node.y)/2) < nodeDiameter/2;
+  return Math.sqrt(Math.pow((point.x-node.x),2) + Math.pow((point.y-node.y),2)) < nodeRadius;
 }
