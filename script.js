@@ -57,5 +57,6 @@ function addChild(index){
 }
 
 function isSelected(point, node) {
-  return Math.sqrt((point.x-node.x)**2 + (point.y - node.y)**2) < nodeDiameter/2;
+  console.log(Math.sqrt((point.x-node.x)/2 + (point.y - node.y)/2))
+  return Math.sqrt((point.x-node.x)/2 + (point.y - node.y)/2) < nodeDiameter/2;
 }
