@@ -12,6 +12,8 @@ var nodeRadius = 30;
 var canvasWidth = c.width;
 var canvasHeight = c.height;
 var branchFactor = 1;
+var nodePlacementLeft = false;
+var nodePlacementRight = false;
 
 root = drawNode(100, canvasHeight/2, null, null);
 
@@ -23,6 +25,17 @@ c.addEventListener('click', (e) => {
         x: e.clientX-10,
         y: e.clientY-94
     };
+
+    if (nodePlacementLeft){
+        nodePlacementLeft = false;
+        selectedNode.children[0] = {x: pos.x, y: pos.y, selectedNode, true};
+        return;
+    }
+    else if(nodePlacementRight){
+        nodePlacementRight = false;
+        selectedNode.children[1] = {x: pos.x, y: pos.y, selectedNode, false};
+        return;
+    }
 
     let stack = [];
     stack.push(root);
@@ -62,12 +75,11 @@ function addChild(){
     console.log(selectedNode);
     // add a top node first
     if(selectedNode.children[0] === null){
-        branchFactor += 2;
-        selectedNode.children[0] = drawNode(selectedNode.x+100, selectedNode.y-100+branchFactor*10, selectedNode, true);
+        nodePlacementLeft = true;
     }
     // if top node exists add bottom node
     else if(selectedNode.children[1] === null){
-       selectedNode.children[1] = drawNode(selectedNode.x+100, selectedNode.y+100-branchFactor*10, selectedNode, false);
+        nodePlacementRight = true;
     }
     // if both exist then limit is reached
     else {
