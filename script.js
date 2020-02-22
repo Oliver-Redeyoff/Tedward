@@ -63,6 +63,12 @@ c.addEventListener('click', (e) => {
 
         if (isSelected(pos, nodeCenter)) {
             console.log(node + " is selected");
+            ctx.moveTo(node.x,node.y);
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, nodeRadius, 0, Math.PI * 2, true);
+            ctx.strokeStyle = "blue";
+            ctx.lineWidth = 2;
+            ctx.stroke();
             selectedNode = node;
             break;
         }
@@ -101,7 +107,6 @@ function nodeRemove(node) {
         nodeRemove(node.right);
         node.left = null;
         node.right = null;
-        //hideNode(node.x, node.y);
         node = null;
     }
 }
