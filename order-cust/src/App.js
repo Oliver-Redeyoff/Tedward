@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, CardColumns, Col, Container, Navbar, NavbarBrand, Row} from "react-bootstrap";
+import {Button, CardColumns, Col, Container, Nav, Navbar, NavbarBrand, Row} from "react-bootstrap";
 import Item from "./Item";
 
 const App = () => {
@@ -18,7 +18,7 @@ const App = () => {
         console.log(JSON.stringify(toSend));
 
         // "http://192.168.89.184:6969/"
-        fetch("http://127.0.0.1:6969/", {
+        fetch("http://192.168.89.184:6969/", {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -59,11 +59,16 @@ const App = () => {
         }
     };
 
+    let total = ((numCoffee*items.coffee.price)+(numTea*items.tea.price)+(numMonster*items.monster.price))/100;
+
     return (
         <div>
             <Navbar bg={"primary"} variant={"dark"} style={{marginBottom: '3rem'}}>
                 <NavbarBrand>M'Lady Cafe</NavbarBrand>
-                <Button style={{marginBottom: '1rem'}} onClick={e => orderHandler()}>Order!</Button>
+                <Navbar.Collapse className={"justify-content-end"}>
+                    <Navbar.Text variant={"dark"}>{"Total £"+ total}</Navbar.Text>
+                    <Button variant={"primary"} style={{marginBottom: '1rem'}} onClick={e => orderHandler()}>Order!</Button>
+                </Navbar.Collapse>
             </Navbar>
             <Container>
                 <Row>
