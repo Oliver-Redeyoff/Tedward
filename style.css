@@ -1,0 +1,34 @@
+body{
+  font-family: Arial;
+}
+
+h1{
+  text-align: center;
+}
+
+p{
+  text-align: center;
+  margin-top: -10px;
+}
+
+.customButton {
+  margin-top: 50px;
+  background-color: #333333;
+  border: black;
+  color: white;
+  padding: 15px 15px;
+  text-align: center;
+  cursor: crosshair;
+  alignment: center;
+  align-content: center;
+  align-items: center;
+  alignment-baseline: center;
+}
+
+.customButton:hover {
+  background-color: black;
+}
+
+.buttonWrap {
+  text-align: center;
+}
