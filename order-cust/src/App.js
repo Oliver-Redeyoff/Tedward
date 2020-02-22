@@ -18,7 +18,7 @@ const App = () => {
         console.log(JSON.stringify(toSend));
 
         // "http://192.168.89.184:6969/"
-        fetch("http://127.0.0.1:6969/", {
+        fetch("http://192.168.89.184:6969/", {
             method: 'POST',
             mode: 'cors',
             headers: {
