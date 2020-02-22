@@ -5,14 +5,16 @@
   </head>
 
   <body>
-    <h1 id="title">Robot transporter controller</h1>
+    <img src="assets/robot.png"></img>
+    <h1 id="title">Network creation tool</h1>
     <p onclick="addChild(0)">By mlady</p>
     <canvas id="myCanvas" width="1000" height="600" style="border:1px solid #d3d3d3;">
     Your browser does not support the HTML5 canvas tag.</canvas>
     <div class="buttonWrap">
       <button class="customButton" onclick="addChild()">Add Node</button>
-      <button class="customButton" onclick="nodeRemoveWrapper()">Delete Node</button>
+      <button class="customButton" onclick="removeNode()">Delete Node</button>
       <button class="customButton" onclick="sendHandler()">Send Car</button>
+      <button class="customButton" onclick="saveNetwork()">Save network</button>
     </div>
   </body>
 

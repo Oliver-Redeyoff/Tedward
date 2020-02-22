@@ -23,9 +23,10 @@ var firstClick = true;
 
 c.addEventListener('click', (e) => {
     console.log("click");
+    var rect = c.getBoundingClientRect();
     const pos = {
-        x: e.clientX-10,
-        y: e.clientY-94
+        x: e.clientX-rect.left,
+        y: e.clientY-rect.top
     };
 
     if(firstClick){
@@ -76,11 +77,11 @@ c.addEventListener('click', (e) => {
     }
 });
 
-function drawNode(x,y){
+function drawNode(x,y, color){
     ctx.moveTo(x,y);
     ctx.beginPath();
     ctx.arc(x, y, nodeRadius, 0, Math.PI * 2, true);
-    ctx.strokeStyle = "black";
+    ctx.strokeStyle = color;
     ctx.lineWidth = 2;
     ctx.stroke();
 };
@@ -101,26 +102,18 @@ function addChild(){
     }
 }
 
-function nodeRemove(node) {
-    if (node !== null) {
-        nodeRemove(node.left);
-        nodeRemove(node.right);
-        node.left = null;
-        node.right = null;
-        node = null;
-    }
-}
-
-function nodeRemoveWrapper() {
-    nodeRemove(selectedNode);
-    console.log(selectedNode);
-    if (selectedNode.left) {
-        selectedNode.parent.left = null;
+// remove reference for selected node and therefore all child nodes as well
+function removeNode() {
+    node = selectedNode;
+    if(node.parent.left == node){
+      node.parent.left = null;
     } else {
-        selectedNode.parent.right = null;
+      node.parent.right = null;
     }
+    draw()
 }
 
+// draw line inbetween two points
 function drawLine(x1, y1, x2, y2){
   ctx.beginPath();
   ctx.moveTo(x1, y1);
@@ -128,6 +121,7 @@ function drawLine(x1, y1, x2, y2){
   ctx.stroke();
 }
 
+// detect if a point is within a node
 function isSelected(point, node) {
     console.log(point);
     console.log(node);
@@ -137,11 +131,19 @@ function isSelected(point, node) {
 // draw each node and lines inbetween parent and child nodes
 function draw(){
   ctx.clearRect(0, 0, c.width, c.height);
-  recDraw(root);
+  drawNode(root.x, root.y, "red");
+  if(root.left !== null){
+    recDraw(root.left);
+    drawLine(root.x, root.y, root.left.x, root.left.y);
+  }
+  if(root.right !== null){
+    recDraw(root.right);
+    drawLine(root.x, root.y, root.right.x, root.right.y);
+  }
 }
 function recDraw(node){
   // draw the current node
-  drawNode(node.x, node.y);
+  drawNode(node.x, node.y, "black");
   if(node.left !== null){
     // draw left node
     recDraw(node.left);
@@ -185,4 +187,8 @@ function sendHandler() {
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({"array": out})
     }).then((resp) => console.log(resp)).catch((err) => console.log(err));
+}
+
+function saveNetwork(){
+  
 }
