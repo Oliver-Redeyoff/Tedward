@@ -3,20 +3,20 @@
 #include <ArduinoJson.h>
 #include <ESP8266WebServer.h>
 
-static const uint8_t D0   = 16;
-static const uint8_t D1   = 5;
-static const uint8_t D2   = 4;
-static const uint8_t D3   = 0;
-static const uint8_t D4   = 2;
-static const uint8_t D5   = 14;
-static const uint8_t D6   = 12;
-static const uint8_t D7   = 13;
-static const uint8_t D8   = 15;
-static const uint8_t RX   = 3;
-static const uint8_t TX   = 1;
+static const uint8_t Di0   = 16;
+static const uint8_t Di1   = 5;
+static const uint8_t Di2   = 4;
+static const uint8_t Di3   = 0;
+static const uint8_t Di4   = 2;
+static const uint8_t Di5   = 14;
+static const uint8_t Di6   = 12;
+static const uint8_t Di7   = 13;
+static const uint8_t Di8   = 15;
+static const uint8_t RXPi  = 3;
+static const uint8_t TXPi  = 1;
 
-const char* SSID="Pifi";
-const char* PWD="";
+const char* SSID="JunctionX Exeter";
+const char* PWD="junctionx";
 ESP8266WebServer server(80);
 void handleRecDir();
 
@@ -25,19 +25,19 @@ int inst[1000];
 int len = 1;
 
 //LEFT IR RIGHT IR
-int irSensors[] = {12, 13};
+int irSensors[] = {Di6, Di7};
 
 // echo distance sensor pins
-int trig = 5;
-int echo = 15;
+int trig = Di1;
+int echo = Di8;
 
 // right motor pins
-int p1 =
-int p2 =
+int p1 = Di2;
+int p2 = Di3;
 
 // left motor pins
-int p3 = 
-int p4 =
+int p3 = Di5;
+int p4 = Di4;
 
 void setup() {
   Serial.begin(9600);
@@ -45,9 +45,8 @@ void setup() {
   pinMode(trig, OUTPUT);
   pinMode(echo, INPUT);
 
-  for (int i = 0; i < 2; i++) {
-    pinMode(irSensors[i], INPUT);
-  }
+  pinMode(irSensors[0], INPUT);
+  pinMode(irSensors[1], INPUT);
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -65,19 +64,29 @@ void setup() {
 }
 
 void loop() {
- long duration, distance;
- digitalWrite(trig, LOW);
- delayMicroseconds(2);
- digitalWrite(trig, HIGH);
- delayMicroseconds(10);
- digitalWrite(trig, LOW);
- duration = pulseIn(echo, HIGH);
- distance = (duration/2)/29.1;
- if (distance < 20) {
-   Serial.println("Trig");
-   //STOP!!
-   //REVERSE
- }
+  // first check if there is an obstacle in front
+  long duration, distance;
+ 
+  digitalWrite(trig, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trig, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig, LOW);
+ 
+  duration = pulseIn(echo, HIGH);
+  distance = (duration/2)/29.1;
+ 
+  if (distance < 20) {
+    Serial.println("Trig");
+    //STOP!!
+    //REVERSE
+  }
+
+  // then check if both IR sensors are either side of the line
+  Serial.println("Left: " + String(digitalRead(irSensors[0])));
+  Serial.println("Right: " + String(digitalRead(irSensors[1])));
+
+  // finally deal with internet releated stuff 
   if (ready) {
     server.handleClient();
   } else {
