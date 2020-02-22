@@ -1,4 +1,7 @@
 var c = document.getElementById("myCanvas");
+c.onmousemove = function(){
+    c.style.cursor = "crosshair";
+}
 var ctx = c.getContext("2d");
 
 var nodes = []
@@ -8,6 +11,8 @@ var selectedNode = 0;
 var nodeRadius = 30;
 var canvasWidth = c.width;
 var canvasHeight = c.height;
+
+
 
 drawNode(100, canvasHeight/2);
 
@@ -60,6 +65,7 @@ function addChild(){
     return;
   }
 }
+
 
 function isSelected(point, node) {
   console.log(point)
