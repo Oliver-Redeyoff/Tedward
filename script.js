@@ -68,7 +68,7 @@ c.addEventListener('click', (e) => {
             ctx.beginPath();
             ctx.arc(node.x, node.y, nodeRadius, 0, Math.PI * 2, true);
             ctx.strokeStyle = "blue";
-            ctx.lineWidth = 2;
+            ctx.lineWidth = 4;
             ctx.stroke();
             selectedNode = node;
             break;
