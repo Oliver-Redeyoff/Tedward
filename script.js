@@ -30,18 +30,18 @@ c.addEventListener('click', (e) => {
 
     if(firstClick){
         firstClick = false;
-        root = {x:pos.x, y:pos.y, left:null, right:null};
+        root = {x:pos.x, y:pos.y, left:null, right:null, parent: null};
     }
 
     if (nodePlacementLeft){
         nodePlacementLeft = false;
-        selectedNode.left = {x: pos.x, y: pos.y, parent:selectedNode, left:null, right:null};
+        selectedNode.left = {x: pos.x, y: pos.y, parent:selectedNode, left:null, right:null, parent: selectedNode};
         draw();
         return;
     }
     else if(nodePlacementRight){
         nodePlacementRight = false;
-        selectedNode.right = {x: pos.x, y: pos.y, parent:selectedNode, left:null, right:null};
+        selectedNode.right = {x: pos.x, y: pos.y, parent:selectedNode, left:null, right:null, parent: selectedNode};
         draw();
         return;
     }
@@ -154,4 +154,35 @@ function recDraw(node){
     // draw line between the two
     drawLine(node.x, node.y, node.right.x, node.right.y);
   }
+}
+
+function sendHandler() {
+    let end = selectedNode;
+    if (end === null) {
+        alert("No Selected Node");
+        return;
+    }
+    let stack = [];
+    let curr = end;
+    while (curr != null) {
+        console.log(curr);
+        stack.push(curr);
+        curr = curr.parent;
+    }
+    console.log(stack);
+    let out = [];
+    var current = stack.pop();
+    while (current != null) {
+        let next = stack.pop();
+        console.log(current);
+        out.push(current.left == next ? 0 : 1);
+        current = next;
+    }
+    out.pop();
+    console.log(out);
+    fetch("http://ARDUINO_IP/recdir", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({"array": out})
+    }).then((resp) => console.log(resp)).catch((err) => console.log(err));
 }
