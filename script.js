@@ -155,8 +155,6 @@ function recDraw(node){
     drawLine(node.x, node.y, node.right.x, node.right.y);
   }
 }
-<<<<<<< HEAD
-=======
 
 function sendHandler() {
     let end = selectedNode;
@@ -188,4 +186,3 @@ function sendHandler() {
         body: JSON.stringify({"array": out})
     }).then((resp) => console.log(resp)).catch((err) => console.log(err));
 }
->>>>>>> c04f651c097533d42140d0d3600951fb890f48d4
