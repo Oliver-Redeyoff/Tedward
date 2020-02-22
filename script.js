@@ -189,6 +189,49 @@ function sendHandler() {
     }).then((resp) => console.log(resp)).catch((err) => console.log(err));
 }
 
-function saveNetwork(){
-  
+//2i 2i+1
+function saveNetwork() {
+    let arr = [];
+    for (let i = 0; i < 100; i++) {
+        arr.push(null);
+    }
+    arrayOrder(arr, root, 1);
+    var tempStr = "savedNetwork=" + JSON.stringify(arr);
+    document.cookie = tempStr;
+    console.log(document.cookie);
+}
+
+function arrayOrder(arr, node, k) {
+    if (node !== null) {
+        if (node.left !== null) {
+            arrayOrder(arr, node.left, 2*k);
+        }
+        if (node.right !== null) {
+            arrayOrder(arr, node.right, 2*k+1);
+        }
+        let cpy = Object.assign({}, node);
+        cpy.left = null;
+        cpy.right = null;
+        cpy.parent = null;
+        // delete cpy.left;
+        // delete cpy.right;
+        arr[k] = cpy;
+    }
+}
+
+function loadNetwork() {
+    let cook = document.cookie;
+    let name = "savedNetwork=";
+    let ca = cook.split(';');
+    let net = null;
+    for(let i = 0; i <ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+             net = JSON.parse(c.substring(name.length, c.length));
+        }
+    }
+    console.log(net);
 }
