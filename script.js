@@ -155,37 +155,3 @@ function recDraw(node){
     drawLine(node.x, node.y, node.right.x, node.right.y);
   }
 }
-<<<<<<< HEAD
-=======
-
-function sendHandler() {
-    let end = selectedNode;
-    if (end === null) {
-        alert("No Selected Node");
-        return;
-    }
-    let stack = [];
-    let curr = end;
-    while (curr != null) {
-        console.log(curr);
-        stack.push(curr);
-        curr = curr.parent;
-    }
-    console.log(stack);
-    let out = [];
-    var current = stack.pop();
-    while (current != null) {
-        let next = stack.pop();
-        console.log(current);
-        out.push(current.left == next ? 0 : 1);
-        current = next;
-    }
-    out.pop();
-    console.log(out);
-    fetch("http://ARDUINO_IP/recdir", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({"array": out})
-    }).then((resp) => console.log(resp)).catch((err) => console.log(err));
-}
->>>>>>> 8ff0becc9aa0bb40346945bcc8c97ba1122f2bc2
