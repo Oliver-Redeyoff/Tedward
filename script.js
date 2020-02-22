@@ -21,5 +21,5 @@ function drawNode(x,y){
 }
 
 function addChild(index){
-  if(nodes[index][3] == [])
+  if(nodes[index][3] == []);
 }
