@@ -1,13 +1,8 @@
 import React from "react"
-import {Card, Button} from "react-bootstrap"
+import {Card, Button, Container, Row, Col} from "react-bootstrap"
 
 const Item = (props) => {
     let item = props.item;
-    const orderHandler =(e) => {
-        e.preventDefault();
-        console.log("Order Coffee");
-    };
-
     const formatPrice = (price) => {
         let dec = Number(price)/100;
         return ("£"+String(dec))
@@ -21,7 +16,13 @@ const Item = (props) => {
                 <Card.Text>
                     {item.desc}
                 </Card.Text>
-                <Button onClick={e => orderHandler(e)}>Order</Button>
+                <Container>
+                    <Row>
+                        <Col><Button onClick={e => props.item.update(props.item.val-1<0 ? 0 : props.item.val-1)}>-</Button></Col>
+                        <Col>{props.item.val}</Col>
+                        <Col><Button onClick={e => props.item.update(props.item.val+1)}>+</Button></Col>
+                    </Row>
+                </Container>
             </Card.Body>
         </Card>
     );
