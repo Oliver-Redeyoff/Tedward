@@ -197,11 +197,20 @@ function saveNetwork() {
     }
     arrayOrder(arr, root, 1);
     var tempStr = "savedNetwork=" + JSON.stringify(arr);
+
     document.cookie = tempStr;
-    console.log(document.cookie);
+    document.cookie = document.cookie.substring(0,document.cookie.length-1);
+    // for(let i = 0;i<100;i++){
+    //     console.log(document.cookie[i]);
+    // }
+    let m = document.cookie.split(",");
+    console.log(m);
+    // console.log(typeof document.cookie);
+    // console.log(document.cookie);
 }
 
-function arrayOrder(arr, node, k) {
+function arrayOrder(arr, node, g) {
+    let k = g*1;
     if (node !== null) {
         if (node.left !== null) {
             arrayOrder(arr, node.left, 2*k);
@@ -210,11 +219,9 @@ function arrayOrder(arr, node, k) {
             arrayOrder(arr, node.right, 2*k+1);
         }
         let cpy = Object.assign({}, node);
-        cpy.left = null;
-        cpy.right = null;
-        cpy.parent = null;
-        // delete cpy.left;
-        // delete cpy.right;
+        cpy.left = 2*k;
+        cpy.right = 2*k+1;
+        cpy.parent =null;
         arr[k] = cpy;
     }
 }
@@ -234,4 +241,34 @@ function loadNetwork() {
         }
     }
     console.log(net);
+    // net.map(i => {if (i!=null) {console.log(i)}})
+    recurse(1, null, net);
+    postOrder(root);
 }
+
+function recurse(k, parent, arr) {
+    let me = arr[k];
+    if (k === 1) {
+        root = me;
+    }
+    let left = 2*k;
+    let right = left +1;
+    me.parent = parent;
+    me.left = arr[left];
+    me.right = arr[right];
+    if (me.left !== null) {
+        recurse(left, me, arr);
+    }
+    if (me.right !== null) {
+        recurse(right, me, arr);
+    }
+}
+
+function postOrder(node) {
+    if (node !== null) {
+        postOrder(node.left);
+        postOrder(node.right);
+        console.log(node);
+    }
+}
+
