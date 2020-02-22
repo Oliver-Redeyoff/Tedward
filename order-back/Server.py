@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify, Response
 import memcache
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 items = {
     "Coffee": 69,
@@ -27,7 +29,6 @@ def rec_order():
 
     headers = {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
     }
 
     json = request.json

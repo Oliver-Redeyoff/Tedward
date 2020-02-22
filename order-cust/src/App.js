@@ -17,12 +17,12 @@ const App = () => {
 
         console.log(JSON.stringify(toSend));
 
+        // "http://192.168.89.184:6969/"
         fetch("http://127.0.0.1:6969/", {
             method: 'POST',
             mode: 'cors',
             headers: {
                 "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*"
             },
             body: JSON.stringify(toSend)
         }).then((resp) => {
